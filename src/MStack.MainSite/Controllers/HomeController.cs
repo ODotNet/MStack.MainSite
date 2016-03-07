@@ -26,5 +26,11 @@ namespace MStack.MainSite.Controllers
 
             return View();
         }
+
+        [AllowAnonymous]
+        public ActionResult KeepAlive()
+        {
+            return Content("Alive");
+        }
     }
 }
