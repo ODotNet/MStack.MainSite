@@ -6,55 +6,39 @@
     <title>@ViewBag.Title - MStack.club(微软技术栈俱乐部)</title>
     <meta property="qc:admins" content="1776214747653413363452" /><!--QQ Auth认证-->
     @Styles.Render("~/Content/css")
-    <link href="~/Content/tether/tether.min.css" rel="stylesheet" />
-    <link href="~/Content/tether/tether-theme-arrows.min.css" rel="stylesheet" />
-    @*@Scripts.Render("~/bundles/modernizr")*@
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-
-
-    <div class="container">
-        <nav class="navbar navbar-light bg-faded">
-            <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#navbar-header" aria-controls="navbar-header">
-                &#9776;
-            </button>
-            <div class="collapse navbar-toggleable-xs" id="navbar-header">
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 @Html.ActionLink("MStack(微软技术栈俱乐部)", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                <ul class="nav navbar-nav">
-                    @*<li class="nav-item active">
-                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                        </li>*@
-                    @*<li class="nav-item">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })</li>*@
-                    <li class="nav-item">@Html.ActionLink("论坛", "Index", "Forum", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("推荐书籍", "BookList", "Home", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })</li>
-                </ul>
-                <form class="form-inline pull-xs-right">
-                    <input class="form-control" type="text" placeholder="Search">
-                    <button class="btn btn-success-outline" type="submit">Search</button>
-                </form>
             </div>
-        </nav> <!-- /navbar -->
-        <!-- Main component for a primary marketing message or call to action -->
-        @*<div class="jumbotron">
-                <h1>Navbar example</h1>
-                <p>This example is a quick exercise to illustrate how the default responsive navbar works. It's placed within a <code>.container</code> to limit its width and will scroll with the rest of the page's content.</p>
-                <p>At the smallest breakpoint, the collapse plugin is used to hide the links and show a menu button to toggle the collapsed content.</p>
-                <p>
-                    <a class="btn btn-lg btn-primary" href="../../components/navbar" role="button">View navbar docs &raquo;</a>
-                </p>
-            </div>*@
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("论坛", "Index", "Forum")</li>
+                    <li>@Html.ActionLink("推荐书籍", "BookList", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>             
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - MStack.club(微软技术栈俱乐部)</p>
         </footer>
-    </div> <!-- /container -->
-    @Scripts.Render("~/bundles/jquery")
-    <script src="~/Scripts/tether/tether.min.js"></script>
-    @Scripts.Render("~/bundles/bootstrap")
+    </div>
 
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>
