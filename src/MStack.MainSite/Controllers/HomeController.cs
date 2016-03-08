@@ -32,5 +32,11 @@ namespace MStack.MainSite.Controllers
         {
             return Content("Alive");
         }
+
+
+        public ActionResult BookList()
+        {
+            return View();
+        }
     }
 }
