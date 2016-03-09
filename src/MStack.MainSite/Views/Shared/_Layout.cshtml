@@ -1,6 +1,6 @@
 ﻿@if (ViewBag.IsPjaxRequest ?? false)
 {
-    <title>@ViewBag.Title</title>
+    <title>@(string.IsNullOrWhiteSpace(ViewBag.Title) ? "微软技术栈俱乐部-MStack.club" : ViewBag.Title + " - 微软技术栈俱乐部-MStack.club")</title>
     @RenderSection("styles", false)
     @RenderSection("headScripts", false)
     @RenderSection("footScripts", false)
@@ -12,7 +12,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - MStack.club(微软技术栈俱乐部)</title>
+    <title>@(string.IsNullOrWhiteSpace(ViewBag.Title) ? "微软技术栈俱乐部-MStack.club" : ViewBag.Title + " - 微软技术栈俱乐部-MStack.club")</title>
     <meta property="qc:admins" content="1776214747653413363452" /><!--QQ Auth认证-->
     @Styles.Render("~/Content/fx")
     @*@Scripts.Render("~/bundles/modernizr")*@
