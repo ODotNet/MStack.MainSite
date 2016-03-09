@@ -52,5 +52,15 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/fx")
     @RenderSection("footScripts", required: false)
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?d0d0f7bfc6df15fe74e876d41ab3a810";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
 </body>
 </html>
