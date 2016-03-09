@@ -148,6 +148,8 @@ namespace MStack.MainSite.WebFramework.Authentication
         public string UserName { get; set; }
         public string DisplayName { get; set; }
         public string SessionKey { get; set; }
+
+        public string Email { get; set; }
     }
 
     public static class AuthConstants

@@ -3,6 +3,7 @@
     <title>@(string.IsNullOrWhiteSpace(ViewBag.Title) ? "微软技术栈俱乐部-MStack.club" : ViewBag.Title + " - 微软技术栈俱乐部-MStack.club")</title>
     @RenderSection("styles", false)
     @RenderSection("headScripts", false)
+    @RenderSection("scripts", required: false)
     @RenderSection("footScripts", false)
     @RenderBody()
     return;
@@ -51,6 +52,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/fx")
+    @RenderSection("scripts", required: false)
     @RenderSection("footScripts", required: false)
     <script>
         var _hmt = _hmt || [];
