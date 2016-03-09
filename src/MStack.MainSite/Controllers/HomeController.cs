@@ -30,7 +30,8 @@ namespace MStack.MainSite.Controllers
         [AllowAnonymous]
         public ActionResult KeepAlive()
         {
-            return Content("Alive");
+            return Json(new { alive = true, inProcessingRequest = ApplicationStaticits.ProcessingRequestCount, Now = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToLongTimeString() }, JsonRequestBehavior.AllowGet);
+            //return Content( string.Format("Alive, Total InProcessingRequest:{0}, DateTime:{1} ", ApplicationStaticits.ProcessingRequestCount, DateTime.Now));
         }
 
 
