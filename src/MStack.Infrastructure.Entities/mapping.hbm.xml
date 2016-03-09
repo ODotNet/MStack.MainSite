@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="MStack.Infrastructure.Entities"
+                   namespace="MStack.Infrastructure.Entities" default-lazy="false">
+  <class name="User" table="`User`">
+    <cache usage="read-write" />
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <property name="Email" length="64" unique="1"/>
+    <property name="DisplayName" length="32" />
+    <property name="HashedPassword" length="128"/>
+  </class>
+</hibernate-mapping>
+

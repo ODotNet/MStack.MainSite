@@ -150,6 +150,7 @@ namespace MStack.MainSite.WebFramework.Authentication
         public string SessionKey { get; set; }
 
         public string Email { get; set; }
+        public string HashedPassword { get; internal set; }
     }
 
     public static class AuthConstants

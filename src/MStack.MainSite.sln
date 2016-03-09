@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MStack.MainSite", "MStack.MainSite\MStack.MainSite.csproj", "{C47A32F8-5916-4EF3-B330-80405D6C3C84}"
 EndProject
@@ -21,6 +21,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MStack.Module.Forum.ApplicationService", "MStack.Module.Forum.ApplicationService\MStack.Module.Forum.ApplicationService.csproj", "{1F86E861-55EC-43E2-BF8D-E4A7333BA36D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MStack.Core", "MStack.Core\MStack.Core.csproj", "{078EBE09-7294-4DB7-8B48-3C0018B632C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MStack.Module.Forum.Entites", "MStack.Module.Forum.Entites\MStack.Module.Forum.Entites.csproj", "{128DD479-FCFB-47CC-B2C0-1269A536A913}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{ECF965A2-53F1-42D0-BDDE-EC0283A3557B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MStack.Infrastructure.Entities", "MStack.Infrastructure.Entities\MStack.Infrastructure.Entities.csproj", "{83521113-965E-45D8-9FDC-03969FE3DDDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +54,14 @@ Global
 		{078EBE09-7294-4DB7-8B48-3C0018B632C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{078EBE09-7294-4DB7-8B48-3C0018B632C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{078EBE09-7294-4DB7-8B48-3C0018B632C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{128DD479-FCFB-47CC-B2C0-1269A536A913}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{128DD479-FCFB-47CC-B2C0-1269A536A913}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{128DD479-FCFB-47CC-B2C0-1269A536A913}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{128DD479-FCFB-47CC-B2C0-1269A536A913}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83521113-965E-45D8-9FDC-03969FE3DDDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83521113-965E-45D8-9FDC-03969FE3DDDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83521113-965E-45D8-9FDC-03969FE3DDDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83521113-965E-45D8-9FDC-03969FE3DDDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,5 +70,7 @@ Global
 		{A375A80E-874A-4382-96B7-12CA1BB05B81} = {06A6652C-5FB2-4A68-B712-09FBA804789F}
 		{7E642ED1-CAF2-4058-8DE2-DFD711768174} = {06A6652C-5FB2-4A68-B712-09FBA804789F}
 		{1F86E861-55EC-43E2-BF8D-E4A7333BA36D} = {06A6652C-5FB2-4A68-B712-09FBA804789F}
+		{128DD479-FCFB-47CC-B2C0-1269A536A913} = {06A6652C-5FB2-4A68-B712-09FBA804789F}
+		{83521113-965E-45D8-9FDC-03969FE3DDDA} = {ECF965A2-53F1-42D0-BDDE-EC0283A3557B}
 	EndGlobalSection
 EndGlobal

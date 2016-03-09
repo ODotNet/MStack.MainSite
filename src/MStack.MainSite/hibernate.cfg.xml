@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+This template was written to work with NHibernate.Test.
+Copy the template to your NHibernate.Test project folder and rename it in hibernate.cfg.xml and change it 
+for your own use before compile tests in VisualStudio.
+-->
+<!-- This is the ByteFX.Data.dll provider for MySql -->
+<hibernate-configuration  xmlns="urn:nhibernate-configuration-2.2" >
+  <session-factory name="GMDEV">
+    <property name="connection.driver_class">NHibernate.Driver.MySqlDataDriver</property>
+    <property name="connection.connection_string">Database=mstack;Data Source=usdevdb.niusys.com;port=13306;User Id=dev_mstack;Password=mstackclub;CharSet=utf8;</property>
+    <property name="dialect">NHibernate.Dialect.MySQLDialect</property>
+    <property name="query.substitutions">true 1, false 0, yes 'Y', no 'N'</property>
+    <property name="show_sql">true</property>
+    <property name="max_fetch_depth">1</property>
+    <property name="adonet.batch_size">100</property>
+    <property name="cache.use_query_cache">true</property>
+    <property name="cache.use_second_level_cache">true</property>
+    <property name="cache.provider_class">NHibernate.Caches.SysCache.SysCacheProvider, NHibernate.Caches.SysCache</property>
+    <property name="current_session_context_class">NHibernate.Context.WebSessionContext</property>
+    <mapping assembly="MStack.Infrastructure.Entities" />
+  </session-factory>
+</hibernate-configuration>

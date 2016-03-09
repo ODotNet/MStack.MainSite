@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MStack.Module.Forum.ApplicationService
+namespace MStack.Module.Forum.Entites
 {
-    public class Class1
+    public class Topic
     {
     }
 }
