@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace MStack.MainSite.Controllers
 {
-    public class ForumController : Controller
+    public class ForumController : BaseController
     {
         /// <summary>
         /// 论坛模块首页

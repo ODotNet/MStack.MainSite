@@ -1,12 +1,22 @@
-﻿<!DOCTYPE html>
+﻿@if (ViewBag.IsPjaxRequest ?? false)
+{
+    <title>@ViewBag.Title</title>
+    @RenderSection("styles", false)
+    @RenderSection("headScripts", false)
+    @RenderSection("footScripts", false)
+    @RenderBody()
+    return;
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - MStack.club(微软技术栈俱乐部)</title>
     <meta property="qc:admins" content="1776214747653413363452" /><!--QQ Auth认证-->
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/fx.css")
+    @*@Scripts.Render("~/bundles/modernizr")*@
+    @RenderSection("headScripts", false)
 </head>
 <body>
     <div class="navbar navbar-default navbar-fixed-top">
@@ -17,28 +27,30 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("MStack(微软技术栈俱乐部)", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("MStack(微软技术栈俱乐部)", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", data_pjax = 1 })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("论坛", "Index", "Forum")</li>
-                    <li>@Html.ActionLink("推荐书籍", "BookList", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>             
+                    <li>@Html.ActionLink("论坛", "Index", "Forum", null, new { data_pjax = 1 })</li>
+                    <li>@Html.ActionLink("推荐书籍", "BookList", "Home", null, new { data_pjax = 1 })</li>
+                    <li>@Html.ActionLink("About", "About", "Home", null, new { data_pjax = 1 })</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home", null, new { data_pjax = 1 })</li>
                 </ul>
             </div>
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()
+        <div id="pjax-container">
+            @RenderBody()
+        </div>
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - MStack.club(微软技术栈俱乐部)</p>
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jquery.js")
+    @Scripts.Render("~/bundles/fx.js")
+    @RenderSection("footScripts", required: false)
 </body>
 </html>
