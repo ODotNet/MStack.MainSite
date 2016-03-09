@@ -34,7 +34,7 @@ namespace MStack.MainSite.Controllers
             //return Content( string.Format("Alive, Total InProcessingRequest:{0}, DateTime:{1} ", ApplicationStaticits.ProcessingRequestCount, DateTime.Now));
         }
 
-
+        [Authorize]
         public ActionResult BookList()
         {
             return View();

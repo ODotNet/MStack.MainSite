@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace MStack.MainSite.Controllers
 {
+    [Authorize]
     public class ForumController : BaseController
     {
         /// <summary>
