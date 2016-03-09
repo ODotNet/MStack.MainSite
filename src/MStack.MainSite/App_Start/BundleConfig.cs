@@ -8,10 +8,10 @@ namespace MStack.MainSite
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery.js").Include(
-                        "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jquery.pjax.js"
-                        ));
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+            "~/Scripts/jquery-{version}.js",
+            "~/Scripts/jquery.pjax.js"
+            ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -21,13 +21,13 @@ namespace MStack.MainSite
             //bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
             //            "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/fx.js").Include(
+            bundles.Add(new ScriptBundle("~/bundles/fx").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/nprogress.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/site.js"));
 
-            bundles.Add(new StyleBundle("~/Content/fx.css").Include(
+            bundles.Add(new StyleBundle("~/Content/fx").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/nprogress.css",
                       "~/Content/site.css"));
