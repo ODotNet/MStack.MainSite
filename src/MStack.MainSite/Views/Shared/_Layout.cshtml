@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - MStack.club(微软技术栈俱乐部)</title>
     <meta property="qc:admins" content="1776214747653413363452" /><!--QQ Auth认证-->
-    @Styles.Render("~/Content/fx.css")
+    @Styles.Render("~/Content/fx")
     @*@Scripts.Render("~/bundles/modernizr")*@
     @RenderSection("headScripts", false)
 </head>
@@ -49,8 +49,8 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery.js")
-    @Scripts.Render("~/bundles/fx.js")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/fx")
     @RenderSection("footScripts", required: false)
 </body>
 </html>
