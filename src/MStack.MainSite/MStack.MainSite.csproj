@@ -196,6 +196,7 @@
     <Compile Include="WebFramework\Authentication\ApplicationUserManager.cs" />
     <Compile Include="WebFramework\Authentication\ApplicationUserRepository.cs" />
     <Compile Include="WebFramework\Authentication\OwinAuthenticationExtensions.cs" />
+    <Compile Include="WebFramework\Data\DbConnectionProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -254,6 +255,7 @@
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
