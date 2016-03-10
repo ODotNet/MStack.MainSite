@@ -88,6 +88,7 @@ namespace MStack.MainSite.WebFramework.Authentication
             this.Email = user.Email;
             this.PasswordHash = user.PasswordHash;
             this.SecurityStamp = user.SecurityStamp;
+            this.EmailConfirmed = user.EmailConfirmed;
         }
 
         //public ApplicationUser(SessionObject sessionObject)
@@ -104,6 +105,8 @@ namespace MStack.MainSite.WebFramework.Authentication
             //userIdentity.AddClaim(new Claim(AuthConstants.LogonUser, JsonConvert.SerializeObject(this)));
             return userIdentity;
         }
+
+        public List<UserClaim> Claims { get; set; }
     }
 
     public static class AuthConstants

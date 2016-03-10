@@ -12,6 +12,26 @@
     <property name="PasswordHash" length="128"/>
     <property name="SecurityStamp" length="64"/>
     <property name="LoginFailTimes"/>
+    <property name="EmailConfirmed"/>
+  </class>
+
+  <class name="UserLogin">
+    <cache usage="read-write" />
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <property name="UserId" />
+    <property name="LoginProvider" length="128"/>
+    <property name="ProviderKey" length="128" />
+  </class>
+  <class name="UserClaim">
+    <cache usage="read-write" />
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <property name="UserId" />
+    <property name="ClaimType" length="128"/>
+    <property name="ClaimValue" length="128" />
   </class>
 </hibernate-mapping>
 

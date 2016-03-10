@@ -23,24 +23,54 @@ namespace MStack.MainSite.WebFramework.Authentication
         //}
 
         private ISession _session = null;
+        private ITransaction _trans = null;
         public ISession Session
         {
             get
             {
                 if (_session == null)
+                {
                     _session = NHSessionFactory.OpenSession();
+                    _trans = _session.BeginTransaction();
+                }
                 return _session;
             }
         }
 
         public Task AddClaimAsync(TUser user, Claim claim)
         {
-            throw new NotImplementedException();
+            if ((object)user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+            if (claim == null)
+            {
+                throw new ArgumentNullException("claim");
+            }
+
+            user.Claims.Add(new UserClaim()
+            {
+                UserId = user.Id,
+                ClaimType = claim.Type,
+                ClaimValue = claim.Value
+            });
+
+            return Task.FromResult<int>(0);
         }
 
         public Task AddLoginAsync(TUser user, UserLoginInfo login)
         {
-            throw new NotImplementedException();
+            if ((object)user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+            if (login == null)
+            {
+                throw new ArgumentNullException("login");
+            }
+
+            Session.SaveOrUpdate(new UserLogin() { UserId = user.Id, LoginProvider = login.LoginProvider, ProviderKey = login.ProviderKey });
+            return Task.FromResult<int>(0);
         }
 
         public Task AddToRoleAsync(TUser user, string roleName)
@@ -52,15 +82,7 @@ namespace MStack.MainSite.WebFramework.Authentication
         {
             user.DisplayName = user.Email;
 
-            var userEntity = new User()
-            {
-                Email = user.Email,
-                DisplayName = user.Email,
-                PasswordHash = user.PasswordHash,
-                SecurityStamp = user.SecurityStamp,
-                UserName = user.Email,
-                Id = user.Id
-            };
+            var userEntity = GetUserFromTUser(user);
 
             Session.Save(userEntity);
             Session.Flush();
@@ -69,22 +91,56 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public Task DeleteAsync(TUser user)
         {
-            throw new NotImplementedException();
+            var userEntity = Session.Get<User>(user.Id);
+            if (userEntity != null)
+                Session.Delete(userEntity);
+            return Task.FromResult(0);
         }
 
         public void Dispose()
         {
-            //throw new NotImplementedException();
+            if (_trans != null && !_trans.WasCommitted)
+            {
+                _trans.Commit();
+            }
+            if (Session != null)
+            {
+                Session.Flush();
+                if (Session.IsConnected)
+                {
+                    Session.Close();
+                }
+
+                Session.Dispose();
+            }
         }
 
         public Task<TUser> FindAsync(UserLoginInfo login)
         {
-            throw new NotImplementedException();
+            if (login == null)
+            {
+                throw new ArgumentNullException("login");
+            }
+
+            var userLogin = Session.QueryOver<UserLogin>().Where(x => x.LoginProvider == login.LoginProvider && x.ProviderKey == login.ProviderKey).SingleOrDefault();
+            if (userLogin == null)
+                //throw new SystemException("第三方账户信息不存在");
+                return Task.FromResult<TUser>(null);
+
+            var user = Session.Get<User>(userLogin.UserId);
+
+            return Task.FromResult(new ApplicationUser(user) as TUser);
         }
 
         public Task<TUser> FindByEmailAsync(string email)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                throw new ArgumentNullException("email");
+            }
+
+            var user = Session.Query<User>().SingleOrDefault(x => x.Email == email);
+            return Task.FromResult(new ApplicationUser(user) as TUser);
         }
 
         public Task<TUser> FindByIdAsync(Guid userId)
@@ -105,16 +161,6 @@ namespace MStack.MainSite.WebFramework.Authentication
             return Task.FromResult(new ApplicationUser(userEntity) as TUser);
         }
 
-        //private TUser ToAplicationUser(User user)
-        //{
-        //    return new TUser() { UserId = user.Id, Id = user.Id, DisplayName = user.DisplayName, Email = user.Email, PasswordHash = user.PasswordHash };
-        //}
-
-        //private TUser ToUserEntity(User user)
-        //{
-        //    return new TUser() { UserId = user.Id, Id = user.Id, DisplayName = user.DisplayName, Email = user.Email, PasswordHash = user.PasswordHash };
-        //}
-
         public Task<int> GetAccessFailedCountAsync(TUser user)
         {
             return Task.FromResult(0);
@@ -132,7 +178,11 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public Task<bool> GetEmailConfirmedAsync(TUser user)
         {
-            return Task.FromResult(true);
+            if (user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+            return Task.FromResult<bool>(user.EmailConfirmed);
         }
 
         public Task<bool> GetLockoutEnabledAsync(TUser user)
@@ -148,7 +198,18 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public Task<IList<UserLoginInfo>> GetLoginsAsync(TUser user)
         {
-            throw new NotImplementedException();
+            if ((object)user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+
+            IList<UserLoginInfo> result = new List<UserLoginInfo>();
+            foreach (UserLogin identityUserLogin in Session.Query<UserLogin>().Where(x => x.UserId == user.Id).ToList())
+            {
+                result.Add(new UserLoginInfo(identityUserLogin.LoginProvider, identityUserLogin.ProviderKey));
+            }
+
+            return Task.FromResult<IList<UserLoginInfo>>(result);
         }
 
         public Task<string> GetPasswordHashAsync(TUser user)
@@ -208,7 +269,22 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public Task RemoveLoginAsync(TUser user, UserLoginInfo login)
         {
-            throw new NotImplementedException();
+            if ((object)user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+            if (login == null)
+            {
+                throw new ArgumentNullException("login");
+            }
+
+            var info = Session.Query<UserLogin>().SingleOrDefault(x => x.LoginProvider == login.LoginProvider && x.ProviderKey == login.ProviderKey);
+            if (info != null)
+            {
+                Session.Delete(info);
+            }
+
+            return Task.FromResult<int>(0);
         }
 
         public Task ResetAccessFailedCountAsync(TUser user)
@@ -273,7 +349,33 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public Task UpdateAsync(TUser user)
         {
-            throw new NotImplementedException();
+            if ((object)user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+            var userEntity = Session.Get<User>(user.Id);
+            GetUserFromTUser(user, userEntity);
+            Session.Update(userEntity);
+            //this.Context.Update(user);
+            //Context.Flush();
+
+            return Task.FromResult(0);
+        }
+
+        private User GetUserFromTUser(TUser user, User userEntity = null)
+        {
+            if (userEntity == null)
+                userEntity = new User();
+
+            userEntity.Id = user.Id;
+            userEntity.Email = user.Email;
+            userEntity.DisplayName = user.Email;
+            userEntity.PasswordHash = user.PasswordHash;
+            userEntity.SecurityStamp = user.SecurityStamp;
+            userEntity.UserName = user.Email;
+            userEntity.EmailConfirmed = user.EmailConfirmed;
+
+            return userEntity;
         }
     }
 }
