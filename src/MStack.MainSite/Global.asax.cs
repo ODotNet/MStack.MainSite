@@ -36,11 +36,10 @@ namespace MStack.MainSite
 
         protected void Application_EndRequest(object sender, EventArgs e)
         {
-
-            if (System.Web.HttpContext.Current.Response.StatusCode >= 500)
-                SessionManager.Rollback();
-            else
-                SessionManager.Commit();
+            //if (System.Web.HttpContext.Current.Response.StatusCode >= 500)
+            //    SessionManager.Rollback();
+            //else
+            //    SessionManager.Commit();
             System.Threading.Interlocked.Decrement(ref ApplicationStaticits.ProcessingRequestCount);
         }
     }

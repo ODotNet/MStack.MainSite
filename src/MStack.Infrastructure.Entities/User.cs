@@ -10,6 +10,6 @@ namespace MStack.Infrastructure.Entities
     {
         public string Email { get; set; }
         public string DisplayName { get; set; }
-        public string HashedPassword { get; set; }
+        public string PasswordHash { get; set; }
     }
 }

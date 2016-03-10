@@ -2,6 +2,8 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
+using MStack.Core.Repositories;
+using MStack.MainSite.WebFramework.Authentication;
 using Newtonsoft.Json;
 using Owin;
 using System;
@@ -74,7 +76,7 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
-            var manager = new ApplicationUserManager(new ApplicationUserRepository(context));
+            var manager = new ApplicationUserManager(new MyUserStore<ApplicationUser>(NHSessionFactory.Session));
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
@@ -150,7 +152,8 @@ namespace MStack.MainSite.WebFramework.Authentication
         public string SessionKey { get; set; }
 
         public string Email { get; set; }
-        public string HashedPassword { get; internal set; }
+        public string PasswordHash { get; internal set; }
+        public string SecurityStamp { get; internal set; }
     }
 
     public static class AuthConstants
@@ -190,8 +193,8 @@ namespace MStack.MainSite.WebFramework.Authentication
         /// <param name="regenerateIdentityCallback"></param>
         /// <param name="getUserIdCallback"></param>
         /// <returns></returns>
-        public static Func<CookieValidateIdentityContext, Task> OnValidateIdentity<TManager, TUser, TKey>(TimeSpan validateInterval, 
-            Func<TManager, TUser, Task<ClaimsIdentity>> regenerateIdentityCallback, 
+        public static Func<CookieValidateIdentityContext, Task> OnValidateIdentity<TManager, TUser, TKey>(TimeSpan validateInterval,
+            Func<TManager, TUser, Task<ClaimsIdentity>> regenerateIdentityCallback,
             Func<ClaimsIdentity, TKey> getUserIdCallback)
             where TManager : UserManager<TUser, TKey>
             where TUser : class, IUser<TKey>

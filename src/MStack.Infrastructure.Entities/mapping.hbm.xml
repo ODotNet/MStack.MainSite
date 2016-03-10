@@ -8,7 +8,7 @@
     </id>
     <property name="Email" length="64" unique="1"/>
     <property name="DisplayName" length="32" />
-    <property name="HashedPassword" length="128"/>
+    <property name="PasswordHash" length="128"/>
   </class>
 </hibernate-mapping>
 

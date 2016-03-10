@@ -16,19 +16,22 @@ namespace MStack.Core.Repositories
 {
     public abstract class MStackRepository<TKey>
     {
-        protected MStackRepository()
+        protected ISession Session { get; private set; }
+
+        public MStackRepository(ISession session)
         {
+            this.Session = session;
         }
 
-        protected ISession Session
-        {
-            get { return NHSessionFactory.Session; }
-        }
+        //protected ISession Session
+        //{
+        //    get { return NHSessionFactory.Session; }
+        //}
 
-        protected IStatelessSession StatelessSession
-        {
-            get { return NHSessionFactory.StatelessSession; }
-        }
+        //protected IStatelessSession StatelessSession
+        //{
+        //    get { return NHSessionFactory.StatelessSession; }
+        //}
 
         protected void Delete<TEntity>(TKey key) where TEntity : IIdEntity<TKey>
         {

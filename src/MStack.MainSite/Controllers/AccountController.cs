@@ -11,9 +11,15 @@ using Microsoft.AspNet.Identity.Owin;
 using MStack.MainSite.Models;
 using Microsoft.Owin;
 using System.Security.Claims;
+using MStack.Core.Repositories;
+using System.Net;
 
 namespace MStack.MainSite.Controllers
 {
+    //public class AuthenticationManager:IAuthenticationManager
+    //{
+
+    //}
     public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
@@ -499,6 +505,8 @@ namespace MStack.MainSite.Controllers
 
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {
+        //private AuthenticationManager authenticationManager;
+
         public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)
             : base(userManager, authenticationManager)
         {
