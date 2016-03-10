@@ -104,6 +104,8 @@ namespace MStack.MainSite.WebFramework.Authentication
             //userIdentity.AddClaim(new Claim(AuthConstants.LogonUser, JsonConvert.SerializeObject(this)));
             return userIdentity;
         }
+
+        public List<UserClaim> Claims { get; set; }
     }
 
     public static class AuthConstants

@@ -14,6 +14,32 @@ namespace MStack.Infrastructure.Entities
         public string PasswordHash { get; set; }
         public string SecurityStamp { get; set; }
         public int LoginFailTimes { get; set; }
+        public bool EmailConfirmed { get; set; }
 
     }
+
+    /// <summary>
+    /// 第三方登录的存储信息
+    /// </summary>
+    public class UserLogin : BaseEntity
+    {
+        public Guid UserId { get; set; }
+        //
+        // 摘要:
+        //     Provider for the linked login, i.e. Facebook, Google, etc.
+        public string LoginProvider { get; set; }
+        //
+        // 摘要:
+        //     User specific key for the login provider
+        public string ProviderKey { get; set; }
+    }
+
+    public class UserClaim : BaseEntity
+    {
+        public Guid UserId { get; set; }
+        public virtual string ClaimType { get; set; }
+
+        public virtual string ClaimValue { get; set; }
+    }
+
 }

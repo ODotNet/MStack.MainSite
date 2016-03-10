@@ -35,7 +35,23 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public Task AddClaimAsync(TUser user, Claim claim)
         {
-            throw new NotImplementedException();
+            if ((object)user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+            if (claim == null)
+            {
+                throw new ArgumentNullException("claim");
+            }
+
+            user.Claims.Add(new UserClaim()
+            {
+                UserId = user.Id,
+                ClaimType = claim.Type,
+                ClaimValue = claim.Value
+            });
+
+            return Task.FromResult<int>(0);
         }
 
         public Task AddLoginAsync(TUser user, UserLoginInfo login)
@@ -79,7 +95,19 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public Task<TUser> FindAsync(UserLoginInfo login)
         {
-            throw new NotImplementedException();
+            if (login == null)
+            {
+                throw new ArgumentNullException("login");
+            }
+
+            var userLogin = Session.QueryOver<UserLogin>().Where(x => x.LoginProvider == login.LoginProvider && x.ProviderKey == login.ProviderKey).SingleOrDefault();
+            if (userLogin == null)
+                //throw new SystemException("第三方账户信息不存在");
+                return Task.FromResult<TUser>(null);
+
+            var user = Session.Get<User>(userLogin.UserId);
+
+            return Task.FromResult(new ApplicationUser(user) as TUser);
         }
 
         public Task<TUser> FindByEmailAsync(string email)
@@ -132,7 +160,11 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public Task<bool> GetEmailConfirmedAsync(TUser user)
         {
-            return Task.FromResult(true);
+            if (user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+            return Task.FromResult<bool>(user.EmailConfirmed);
         }
 
         public Task<bool> GetLockoutEnabledAsync(TUser user)
@@ -148,7 +180,18 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public Task<IList<UserLoginInfo>> GetLoginsAsync(TUser user)
         {
-            throw new NotImplementedException();
+            if ((object)user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+
+            IList<UserLoginInfo> result = new List<UserLoginInfo>();
+            foreach (UserLogin identityUserLogin in Session.Query<UserLogin>().Where(x => x.UserId == user.Id).ToList())
+            {
+                result.Add(new UserLoginInfo(identityUserLogin.LoginProvider, identityUserLogin.ProviderKey));
+            }
+
+            return Task.FromResult<IList<UserLoginInfo>>(result);
         }
 
         public Task<string> GetPasswordHashAsync(TUser user)
@@ -208,7 +251,22 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public Task RemoveLoginAsync(TUser user, UserLoginInfo login)
         {
-            throw new NotImplementedException();
+            if ((object)user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+            if (login == null)
+            {
+                throw new ArgumentNullException("login");
+            }
+
+            var info = Session.Query<UserLogin>().SingleOrDefault(x => x.LoginProvider == login.LoginProvider && x.ProviderKey == login.ProviderKey);
+            if (info != null)
+            {
+                Session.Delete(info);
+            }
+
+            return Task.FromResult<int>(0);
         }
 
         public Task ResetAccessFailedCountAsync(TUser user)
