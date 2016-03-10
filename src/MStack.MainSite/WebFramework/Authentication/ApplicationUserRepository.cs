@@ -23,12 +23,16 @@ namespace MStack.MainSite.WebFramework.Authentication
         //}
 
         private ISession _session = null;
+        private ITransaction _trans = null;
         public ISession Session
         {
             get
             {
                 if (_session == null)
+                {
                     _session = NHSessionFactory.OpenSession();
+                    _trans = _session.BeginTransaction();
+                }
                 return _session;
             }
         }
@@ -56,7 +60,17 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public Task AddLoginAsync(TUser user, UserLoginInfo login)
         {
-            throw new NotImplementedException();
+            if ((object)user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+            if (login == null)
+            {
+                throw new ArgumentNullException("login");
+            }
+
+            Session.SaveOrUpdate(new UserLogin() { UserId = user.Id, LoginProvider = login.LoginProvider, ProviderKey = login.ProviderKey });
+            return Task.FromResult<int>(0);
         }
 
         public Task AddToRoleAsync(TUser user, string roleName)
@@ -90,7 +104,20 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public void Dispose()
         {
-            //throw new NotImplementedException();
+            if (_trans != null && !_trans.WasCommitted)
+            {
+                _trans.Commit();
+            }
+            if (Session != null)
+            {
+                Session.Flush();
+                if (Session.IsConnected)
+                {
+                    Session.Close();
+                }
+
+                Session.Dispose();
+            }
         }
 
         public Task<TUser> FindAsync(UserLoginInfo login)
@@ -112,7 +139,13 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public Task<TUser> FindByEmailAsync(string email)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                throw new ArgumentNullException("email");
+            }
+
+            var user = Session.Query<User>().SingleOrDefault(x => x.Email == email);
+            return Task.FromResult(new ApplicationUser(user) as TUser);
         }
 
         public Task<TUser> FindByIdAsync(Guid userId)
