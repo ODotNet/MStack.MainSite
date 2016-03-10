@@ -193,6 +193,7 @@
     <Compile Include="Models\ForumModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="WebFramework\Authentication\ApplicationUserManager.cs" />
     <Compile Include="WebFramework\Authentication\ApplicationUserRepository.cs" />
     <Compile Include="WebFramework\Authentication\OwinAuthenticationExtensions.cs" />
   </ItemGroup>
@@ -281,6 +282,8 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

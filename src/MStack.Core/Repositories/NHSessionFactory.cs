@@ -9,23 +9,28 @@ namespace MStack.Core.Repositories
     {
         public static ISessionFactory SessionFactory { get; private set; }
 
-        public static ISession Session
+        //public static ISession Session
+        //{
+        //    get
+        //    {
+        //        try
+        //        {
+        //            if (!HttpContext.Current.Items.Contains("NHibernate.Context.WebSessionContext.SessionFactoryMapKey"))
+        //            {
+        //                SessionManager.OpenSession();
+        //            }
+        //            return SessionFactory.GetCurrentSession();
+        //        }
+        //        catch (HibernateException)
+        //        {
+        //            return SessionManager.OpenSession();
+        //        }
+        //    }
+        //}
+
+        public static ISession OpenSession()
         {
-            get
-            {
-                try
-                {
-                    if (!HttpContext.Current.Items.Contains("NHibernate.Context.WebSessionContext.SessionFactoryMapKey"))
-                    {
-                        SessionManager.OpenSession();
-                    }
-                    return SessionFactory.GetCurrentSession();
-                }
-                catch (HibernateException)
-                {
-                    return SessionManager.OpenSession();
-                }
-            }
+            return SessionFactory.OpenSession();
         }
 
         public static IStatelessSession StatelessSession

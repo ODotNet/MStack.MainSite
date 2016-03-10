@@ -13,133 +13,25 @@ using System.Security.Claims;
 
 namespace MStack.MainSite.WebFramework.Authentication
 {
-    public class UserStore : MStackRepository<Guid>//, IUserLoginStore<TUser>, IUserClaimStore<TUser>, IUserRoleStore<TUser>, IUserPasswordStore<TUser>, IUserSecurityStampStore<TUser>, IQueryableUserStore<TUser>, IUserStore<TUser>, IUserLockoutStore<TUser, string>, IUserEmailStore<TUser>, IUserPhoneNumberStore<TUser>, IUserTwoFactorStore<TUser, string>, IDisposable
-    {
-        public UserStore(ISession session) : base(session)
-        {
-
-        }
-
-        #region IUserStore
-        public Task CreateAsync(ApplicationUser user)
-        {
-            var userEntity = new User()
-            {
-                Email = user.Email,
-                PasswordHash = user.PasswordHash,
-                DisplayName = user.DisplayName
-            };
-            Insert(userEntity);
-            Session.Flush();
-
-            user.Id = userEntity.Id.ToString();
-            user.DisplayName = userEntity.DisplayName;
-            return Task.Run(() => { });
-        }
-
-        public Task DeleteAsync(ApplicationUser user)
-        {
-            var userEntity = Get<User>(user.UserId);
-            return Task.Run(() => { Delete<User>(userEntity); });
-        }
-
-        public Task<ApplicationUser> FindByIdAsync(string userId)
-        {
-            var userEntity = Get<User>(Guid.Parse(userId));
-            return Task.Run<ApplicationUser>(() =>
-            {
-                return new ApplicationUser()
-                {
-                    Id = userId,
-                    UserId = userEntity.Id,
-                    Email = userEntity.Email,
-                    DisplayName = userEntity.DisplayName
-                };
-            });
-        }
-
-        public Task<ApplicationUser> FindByNameAsync(string userName)
-        {
-            var userEntity = Session.Query<User>().SingleOrDefault(x => x.Email == userName);
-
-            return Task.FromResult<ApplicationUser>(userEntity == null ? null : new ApplicationUser()
-            {
-                Id = userEntity.Id.ToString(),
-                UserId = userEntity.Id,
-                Email = userEntity.Email,
-                DisplayName = userEntity.DisplayName,
-                UserName = userEntity.Email
-            });
-        }
-
-        public Task UpdateAsync(ApplicationUser user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Dispose()
-        {
-            Session.Flush();
-            Session.Close();
-            Session.Dispose();
-            //throw new NotImplementedException();
-        }
-
-        public Task SetPasswordHashAsync(ApplicationUser user, string passwordHash)
-        {
-            //var userEntity = new User() { Email = user.Email, PasswordHash = passwordHash };
-            //Insert(userEntity);
-            //return Task.Run(() => { user.PasswordHash = passwordHash; });
-            if (user == null)
-            {
-                throw new ArgumentNullException("user");
-            }
-            user.PasswordHash = passwordHash;
-            return Task.FromResult(0);
-        }
-
-        public Task<string> GetPasswordHashAsync(ApplicationUser user)
-        {
-            return Task.Run<string>(() => { return user.PasswordHash; });
-        }
-
-        public Task<bool> HasPasswordAsync(ApplicationUser user)
-        {
-            return Task.Run<bool>(() => false);
-        }
-
-        public Task AddLoginAsync(ApplicationUser user, UserLoginInfo login)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task RemoveLoginAsync(ApplicationUser user, UserLoginInfo login)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IList<UserLoginInfo>> GetLoginsAsync(ApplicationUser user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ApplicationUser> FindAsync(UserLoginInfo login)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
-    }
-
     public class MyUserStore<TUser> : IUserLoginStore<TUser>, IUserClaimStore<TUser>, IUserRoleStore<TUser>, IUserPasswordStore<TUser>, IUserLockoutStore<TUser, string>,
         IUserSecurityStampStore<TUser>, IUserStore<TUser>, IUserEmailStore<TUser>, IUserPhoneNumberStore<TUser>, IUserTwoFactorStore<TUser, string>, IDisposable
         where TUser : ApplicationUser, new()
     {
-        public MyUserStore(ISession session)
-        {
-            this.Session = session;
-        }
+        //public MyUserStore(ISession session)
+        //{
+        //    this.Session = session;
+        //}
 
-        public ISession Session { get; private set; }
+        private ISession _session = null;
+        public ISession Session
+        {
+            get
+            {
+                if (_session == null)
+                    _session = NHSessionFactory.OpenSession();
+                return _session;
+            }
+        }
 
         public Task AddClaimAsync(TUser user, Claim claim)
         {
@@ -158,6 +50,7 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public Task CreateAsync(TUser user)
         {
+            user.DisplayName = user.Email;
             var userEntity = new User()
             {
                 Email = user.Email,
@@ -168,7 +61,7 @@ namespace MStack.MainSite.WebFramework.Authentication
             Session.Flush();
 
             user.Id = userEntity.Id.ToString();
-            user.DisplayName = userEntity.DisplayName;
+            user.UserId = userEntity.Id;
             return Task.Run(() => { });
         }
 
@@ -195,12 +88,7 @@ namespace MStack.MainSite.WebFramework.Authentication
         public Task<TUser> FindByIdAsync(string userId)
         {
             var userEntity = Session.Get<User>(Guid.Parse(userId));
-            var appUser = new TUser();
-
-            appUser.Id = userId;
-            appUser.UserId = userEntity.Id;
-            appUser.Email = userEntity.Email;
-            appUser.DisplayName = userEntity.DisplayName;
+            var appUser = ToAplicationUser(userEntity);
             return Task.FromResult(appUser);
         }
 
@@ -211,18 +99,18 @@ namespace MStack.MainSite.WebFramework.Authentication
             if (userEntity == null)
                 return Task.FromResult<TUser>(null);
 
-            var appUser = new TUser(); //default(TUser);
-
-            appUser.Id = userEntity.Id.ToString();
-            appUser.UserId = userEntity.Id;
-            appUser.Email = userEntity.Email;
-            appUser.DisplayName = userEntity.DisplayName;
+            var appUser = ToAplicationUser(userEntity);
             return Task.FromResult(appUser);
+        }
+
+        private TUser ToAplicationUser(User user)
+        {
+            return new TUser() { UserId = user.Id, Id = user.Id.ToString(), DisplayName = user.DisplayName, Email = user.Email, PasswordHash = user.PasswordHash };
         }
 
         public Task<int> GetAccessFailedCountAsync(TUser user)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(0);
         }
 
         public Task<IList<Claim>> GetClaimsAsync(TUser user)
@@ -232,17 +120,18 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public Task<string> GetEmailAsync(TUser user)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(user.Email);
         }
 
         public Task<bool> GetEmailConfirmedAsync(TUser user)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(true);
         }
 
         public Task<bool> GetLockoutEnabledAsync(TUser user)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return Task.FromResult(false);
         }
 
         public Task<DateTimeOffset> GetLockoutEndDateAsync(TUser user)
@@ -257,7 +146,7 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public Task<string> GetPasswordHashAsync(TUser user)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(user.PasswordHash);
         }
 
         public Task<string> GetPhoneNumberAsync(TUser user)
@@ -282,17 +171,17 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public Task<bool> GetTwoFactorEnabledAsync(TUser user)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(false);
         }
 
         public Task<bool> HasPasswordAsync(TUser user)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(string.IsNullOrWhiteSpace(user.PasswordHash));
         }
 
         public Task<int> IncrementAccessFailedCountAsync(TUser user)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(user.LoginFailTimes + 1);
         }
 
         public Task<bool> IsInRoleAsync(TUser user, string roleName)
