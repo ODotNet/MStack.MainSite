@@ -82,15 +82,7 @@ namespace MStack.MainSite.WebFramework.Authentication
         {
             user.DisplayName = user.Email;
 
-            var userEntity = new User()
-            {
-                Email = user.Email,
-                DisplayName = user.Email,
-                PasswordHash = user.PasswordHash,
-                SecurityStamp = user.SecurityStamp,
-                UserName = user.Email,
-                Id = user.Id
-            };
+            var userEntity = GetUserFromTUser(user);
 
             Session.Save(userEntity);
             Session.Flush();
@@ -99,7 +91,10 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public Task DeleteAsync(TUser user)
         {
-            throw new NotImplementedException();
+            var userEntity = Session.Get<User>(user.Id);
+            if (userEntity != null)
+                Session.Delete(userEntity);
+            return Task.FromResult(0);
         }
 
         public void Dispose()
@@ -165,16 +160,6 @@ namespace MStack.MainSite.WebFramework.Authentication
             //var appUser = ToAplicationUser(userEntity);
             return Task.FromResult(new ApplicationUser(userEntity) as TUser);
         }
-
-        //private TUser ToAplicationUser(User user)
-        //{
-        //    return new TUser() { UserId = user.Id, Id = user.Id, DisplayName = user.DisplayName, Email = user.Email, PasswordHash = user.PasswordHash };
-        //}
-
-        //private TUser ToUserEntity(User user)
-        //{
-        //    return new TUser() { UserId = user.Id, Id = user.Id, DisplayName = user.DisplayName, Email = user.Email, PasswordHash = user.PasswordHash };
-        //}
 
         public Task<int> GetAccessFailedCountAsync(TUser user)
         {
@@ -364,7 +349,33 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public Task UpdateAsync(TUser user)
         {
-            throw new NotImplementedException();
+            if ((object)user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+            var userEntity = Session.Get<User>(user.Id);
+            GetUserFromTUser(user, userEntity);
+            Session.Update(userEntity);
+            //this.Context.Update(user);
+            //Context.Flush();
+
+            return Task.FromResult(0);
+        }
+
+        private User GetUserFromTUser(TUser user, User userEntity = null)
+        {
+            if (userEntity == null)
+                userEntity = new User();
+
+            userEntity.Id = user.Id;
+            userEntity.Email = user.Email;
+            userEntity.DisplayName = user.Email;
+            userEntity.PasswordHash = user.PasswordHash;
+            userEntity.SecurityStamp = user.SecurityStamp;
+            userEntity.UserName = user.Email;
+            userEntity.EmailConfirmed = user.EmailConfirmed;
+
+            return userEntity;
         }
     }
 }
