@@ -6,9 +6,12 @@
     <id name="Id">
       <generator class="assigned"/>
     </id>
+    <property name="UserName" length="128"/>
     <property name="Email" length="64" unique="1"/>
     <property name="DisplayName" length="32" />
     <property name="PasswordHash" length="128"/>
+    <property name="SecurityStamp" length="64"/>
+    <property name="LoginFailTimes"/>
   </class>
 </hibernate-mapping>
 

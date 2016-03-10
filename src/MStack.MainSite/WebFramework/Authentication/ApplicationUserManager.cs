@@ -9,9 +9,9 @@ using System.Web;
 
 namespace MStack.MainSite.WebFramework.Authentication
 {
-    public class ApplicationUserManager : UserManager<ApplicationUser>
+    public class ApplicationUserManager : UserManager<ApplicationUser, Guid>
     {
-        public ApplicationUserManager(IUserStore<ApplicationUser> store)
+        public ApplicationUserManager(IUserStore<ApplicationUser, Guid> store)
             : base(store)
         {
         }
@@ -21,7 +21,7 @@ namespace MStack.MainSite.WebFramework.Authentication
             //var manager = new ApplicationUserManager(new MyUserStore<ApplicationUser>(NHSessionFactory.Session));
             var manager = new ApplicationUserManager(new MyUserStore<ApplicationUser>());
             // Configure validation logic for usernames
-            manager.UserValidator = new UserValidator<ApplicationUser>(manager)
+            manager.UserValidator = new UserValidator<ApplicationUser, Guid>(manager)
             {
                 //AllowOnlyAlphanumericUserNames = false,
                 //RequireUniqueEmail = true
@@ -51,7 +51,7 @@ namespace MStack.MainSite.WebFramework.Authentication
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
-                manager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
+                manager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser, Guid>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
         }

@@ -180,7 +180,7 @@ namespace MStack.MainSite.Controllers
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(string userId, string code)
+        public async Task<ActionResult> ConfirmEmail(Guid userId, string code)
         {
             if (userId == null || code == null)
             {
@@ -503,7 +503,7 @@ namespace MStack.MainSite.Controllers
         #endregion
     }
 
-    public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
+    public class ApplicationSignInManager : SignInManager<ApplicationUser, Guid>
     {
         //private AuthenticationManager authenticationManager;
 
@@ -516,7 +516,7 @@ namespace MStack.MainSite.Controllers
         {
             return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
         }
-            
+
         public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
         {
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);

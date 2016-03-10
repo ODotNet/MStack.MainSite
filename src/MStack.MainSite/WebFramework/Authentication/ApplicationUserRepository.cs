@@ -13,8 +13,8 @@ using System.Security.Claims;
 
 namespace MStack.MainSite.WebFramework.Authentication
 {
-    public class MyUserStore<TUser> : IUserLoginStore<TUser>, IUserClaimStore<TUser>, IUserRoleStore<TUser>, IUserPasswordStore<TUser>, IUserLockoutStore<TUser, string>,
-        IUserSecurityStampStore<TUser>, IUserStore<TUser>, IUserEmailStore<TUser>, IUserPhoneNumberStore<TUser>, IUserTwoFactorStore<TUser, string>, IDisposable
+    public class MyUserStore<TUser> : IUserLoginStore<TUser, Guid>, IUserClaimStore<TUser, Guid>, IUserRoleStore<TUser, Guid>, IUserPasswordStore<TUser, Guid>, IUserLockoutStore<TUser, Guid>,
+        IUserSecurityStampStore<TUser, Guid>, IUserStore<TUser, Guid>, IUserEmailStore<TUser, Guid>, IUserPhoneNumberStore<TUser, Guid>, IUserTwoFactorStore<TUser, Guid>, IDisposable
         where TUser : ApplicationUser, new()
     {
         //public MyUserStore(ISession session)
@@ -51,18 +51,20 @@ namespace MStack.MainSite.WebFramework.Authentication
         public Task CreateAsync(TUser user)
         {
             user.DisplayName = user.Email;
+
             var userEntity = new User()
             {
                 Email = user.Email,
+                DisplayName = user.Email,
                 PasswordHash = user.PasswordHash,
-                DisplayName = user.DisplayName
+                SecurityStamp = user.SecurityStamp,
+                UserName = user.Email,
+                Id = user.Id
             };
+
             Session.Save(userEntity);
             Session.Flush();
-
-            user.Id = userEntity.Id.ToString();
-            user.UserId = userEntity.Id;
-            return Task.Run(() => { });
+            return Task.FromResult(0);
         }
 
         public Task DeleteAsync(TUser user)
@@ -85,11 +87,11 @@ namespace MStack.MainSite.WebFramework.Authentication
             throw new NotImplementedException();
         }
 
-        public Task<TUser> FindByIdAsync(string userId)
+        public Task<TUser> FindByIdAsync(Guid userId)
         {
-            var userEntity = Session.Get<User>(Guid.Parse(userId));
-            var appUser = ToAplicationUser(userEntity);
-            return Task.FromResult(appUser);
+            var userEntity = Session.Get<User>(userId);
+            //var appUser = ToAplicationUser(userEntity);
+            return Task.FromResult(new ApplicationUser(userEntity) as TUser);
         }
 
         public Task<TUser> FindByNameAsync(string userName)
@@ -99,14 +101,19 @@ namespace MStack.MainSite.WebFramework.Authentication
             if (userEntity == null)
                 return Task.FromResult<TUser>(null);
 
-            var appUser = ToAplicationUser(userEntity);
-            return Task.FromResult(appUser);
+            //var appUser = ToAplicationUser(userEntity);
+            return Task.FromResult(new ApplicationUser(userEntity) as TUser);
         }
 
-        private TUser ToAplicationUser(User user)
-        {
-            return new TUser() { UserId = user.Id, Id = user.Id.ToString(), DisplayName = user.DisplayName, Email = user.Email, PasswordHash = user.PasswordHash };
-        }
+        //private TUser ToAplicationUser(User user)
+        //{
+        //    return new TUser() { UserId = user.Id, Id = user.Id, DisplayName = user.DisplayName, Email = user.Email, PasswordHash = user.PasswordHash };
+        //}
+
+        //private TUser ToUserEntity(User user)
+        //{
+        //    return new TUser() { UserId = user.Id, Id = user.Id, DisplayName = user.DisplayName, Email = user.Email, PasswordHash = user.PasswordHash };
+        //}
 
         public Task<int> GetAccessFailedCountAsync(TUser user)
         {
@@ -115,7 +122,7 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public Task<IList<Claim>> GetClaimsAsync(TUser user)
         {
-            throw new NotImplementedException();
+            return Task.FromResult<IList<Claim>>(new List<Claim>());
         }
 
         public Task<string> GetEmailAsync(TUser user)
@@ -161,7 +168,7 @@ namespace MStack.MainSite.WebFramework.Authentication
 
         public Task<IList<string>> GetRolesAsync(TUser user)
         {
-            throw new NotImplementedException();
+            return Task.FromResult<IList<string>>(new List<string>());
         }
 
         public Task<string> GetSecurityStampAsync(TUser user)

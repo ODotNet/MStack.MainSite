@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using MStack.Core.Repositories;
+using MStack.Infrastructure.Entities;
 using MStack.MainSite.Controllers;
 using MStack.MainSite.WebFramework.Authentication;
 using Newtonsoft.Json;
@@ -72,21 +73,22 @@ namespace MStack.MainSite.WebFramework.Authentication
 
 
 
-    public class ApplicationUser : IUser<string>
+    public class ApplicationUser : User, IUser<Guid>
     {
         public ApplicationUser()
         {
 
         }
 
-        //public ApplicationUser(User user)
-        //{
-        //    this.LogonUser = user;
-        //    this.Id = user.Id.ToString();
-        //    this.UserId = user.Id;
-        //    this.UserName = user.Email;
-        //    this.DisplayName = string.IsNullOrWhiteSpace(user.DisplayName) ? user.Email : user.DisplayName;
-        //}
+        public ApplicationUser(User user)
+        {
+            this.Id = user.Id;
+            this.UserName = user.Email;
+            this.DisplayName = string.IsNullOrWhiteSpace(user.DisplayName) ? user.Email : user.DisplayName;
+            this.Email = user.Email;
+            this.PasswordHash = user.PasswordHash;
+            this.SecurityStamp = user.SecurityStamp;
+        }
 
         //public ApplicationUser(SessionObject sessionObject)
         //    : this(sessionObject.LogonUser)
@@ -98,21 +100,10 @@ namespace MStack.MainSite.WebFramework.Authentication
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            userIdentity.AddClaim(new Claim(AuthConstants.SessionKey, this.SessionKey));
+            //userIdentity.AddClaim(new Claim(AuthConstants.SessionKey, this.SessionKey));
             //userIdentity.AddClaim(new Claim(AuthConstants.LogonUser, JsonConvert.SerializeObject(this)));
             return userIdentity;
         }
-
-        public string Id { get; set; }
-        public Guid UserId { get; set; }
-        public string UserName { get; set; }
-        public string DisplayName { get; set; }
-        public string SessionKey { get; set; }
-
-        public string Email { get; set; }
-        public string PasswordHash { get; set; }
-        public string SecurityStamp { get; set; }
-        public int LoginFailTimes { get; set; }
     }
 
     public static class AuthConstants
