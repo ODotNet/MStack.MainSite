@@ -14,7 +14,7 @@ using NHibernate.Linq;
 
 namespace MStack.Core.Repositories
 {
-    public abstract class MStackRepository<TKey>
+    public class MStackRepository<TKey>
     {
         protected ISession Session { get; private set; }
 
