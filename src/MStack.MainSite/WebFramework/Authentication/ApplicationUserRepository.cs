@@ -103,15 +103,15 @@ namespace MStack.MainSite.WebFramework.Authentication
             {
                 _trans.Commit();
             }
-            if (Session != null)
+            if (_session != null)
             {
-                Session.Flush();
-                if (Session.IsConnected)
+                _session.Flush();
+                if (_session.IsConnected)
                 {
-                    Session.Close();
+                    _session.Close();
                 }
 
-                Session.Dispose();
+                _session.Dispose();
             }
         }
 

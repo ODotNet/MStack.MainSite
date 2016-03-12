@@ -23,7 +23,14 @@ namespace MStack.MainSite
             // Use a cookie to temporarily store information about a user logging in with a third party login provider
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
-            app.UseQQConnectAuthentication(appId: "101294257", appSecret: "10ef6f7c0f935d892c058f240474645d");
+            app.UseQQConnectAuthentication(new Microsoft.Owin.Security.QQ.QQConnectAuthenticationOptions()
+            {
+                AppId = "101294257",
+                AppSecret = "10ef6f7c0f935d892c058f240474645d",
+                Caption = "QQ登录",
+                SignInAsAuthenticationType = "QQ登录",
+                AuthenticationType = "QQ登录"
+            });
         }
     }
 }
