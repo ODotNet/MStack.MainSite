@@ -1,6 +1,6 @@
 ﻿@if (ViewBag.IsPjaxRequest ?? false)
 {
-    <title>@(string.IsNullOrWhiteSpace(ViewBag.Title) ? "微软技术栈俱乐部-MStack.club" : ViewBag.Title + " - 微软技术栈俱乐部-MStack.club")</title>
+    <title>@(string.IsNullOrWhiteSpace(ViewBag.Title) ? "M栈俱乐部-MStack.club" : ViewBag.Title + " - M栈俱乐部-MStack.club")</title>
     @RenderSection("styles", false)
     @RenderSection("headScripts", false)
     @RenderSection("scripts", required: false)
@@ -13,7 +13,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@(string.IsNullOrWhiteSpace(ViewBag.Title) ? "微软技术栈俱乐部-MStack.club" : ViewBag.Title + " - 微软技术栈俱乐部-MStack.club")</title>
+    <title>@(string.IsNullOrWhiteSpace(ViewBag.Title) ? "M栈俱乐部-MStack.club" : ViewBag.Title + " - M栈俱乐部-MStack.club")</title>
     <meta property="qc:admins" content="1776214747653413363452" /><!--QQ Auth认证-->
     @Styles.Render("~/Content/fx")
     @*@Scripts.Render("~/bundles/modernizr")*@
@@ -28,14 +28,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("MStack(微软技术栈俱乐部)", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", data_pjax = 1 })
+                @Html.ActionLink("MStack(M栈俱乐部)", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", data_pjax = 1 })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("论坛", "Index", "Forum", null, new { data_pjax = 1 })</li>
                     <li>@Html.ActionLink("推荐书籍", "BookList", "Home", null, new { data_pjax = 1 })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", null, new { data_pjax = 1 })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", null, new { data_pjax = 1 })</li>
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -46,8 +45,15 @@
             @RenderBody()
         </div>
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - MStack.club(微软技术栈俱乐部)</p>
+        <footer style="text-align:center">
+            <p>&copy; @DateTime.Now.Year - MStack.club(M栈俱乐部)</p>
+            <div>
+                @Html.ActionLink("关于我们", "About", "Home", null, new { data_pjax = 1 }) |
+                @Html.ActionLink("联系我们", "Contact", "Home", null, new { data_pjax = 1 }) |
+                <a href="http://codefault.io" target="_blank">CodeFault.io</a> |
+                <a href="http://www.odotnet.com" target="_blank">ODotNet</a> | 
+                <a href="http://stackoverflow.com/" target="_blank">StackOverFlow</a>
+            </div>
         </footer>
     </div>
 
