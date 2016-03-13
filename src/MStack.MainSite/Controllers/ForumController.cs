@@ -35,7 +35,7 @@ namespace MStack.MainSite.Controllers
         public ActionResult TopicList()
         {
             var viewModel = DataContext.GetQuery<Topic>().ToList<Topic>();
-            return PartialView(viewModel);
+            return View(viewModel);
         }
 
         /// <summary>
