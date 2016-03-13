@@ -1,21 +1,18 @@
-﻿@model MStack.MainSite.Models.Topic
+﻿@model MStack.Infrastructure.Entities.Topic
 
 @{
-    ViewBag.Title = "EditTopic";
+    ViewBag.Title = "编辑帖子";
 }
-
-<h2>EditTopic</h2>
-
+<div class="page-header">
+    <h1>编辑帖子 <small></small></h1>
+</div>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Topic</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
-
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -35,19 +32,21 @@
         <div class="form-group">
             @Html.LabelFor(model => model.PublishDateTime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PublishDateTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.PublishDateTime, new { htmlAttributes = new { @class = "form-control",@readonly="readonly" } })
                 @Html.ValidationMessageFor(model => model.PublishDateTime, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="发表帖子" class="btn btn-primary" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+<div class="row">
+    <div class="pull-right">
+        @Html.ActionLink("返回列表", "Index", "", new { @class = "btn btn-default" })
+    </div>
 </div>
