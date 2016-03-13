@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace MStack.MainSite.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         public UserController()
         {

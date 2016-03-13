@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace MStack.MainSite.Controllers
 {
-    public class ManageController : Controller
+    public class ManageController : BaseController
     {
         private MStackRepository<Guid> DataContext { get; set; }
         public ManageController()
