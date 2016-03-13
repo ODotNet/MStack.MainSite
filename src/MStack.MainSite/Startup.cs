@@ -27,8 +27,8 @@ namespace MStack.MainSite
             {
                 AppId = "101294257",
                 AppSecret = "10ef6f7c0f935d892c058f240474645d",
-                Caption = "QQ登录",
-                SignInAsAuthenticationType = "QQ登录",
+                Caption = "QQ登录"
+                //SignInAsAuthenticationType = "QQ登录",
             });
 
             //app.UseWeChatAuthentication(new Microsoft.Owin.Security.WeChat.WeChatAuthenticationOptions()
