@@ -14,6 +14,7 @@ namespace MStack.MainSite.Controllers
         /// 论坛模块首页
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View();
@@ -23,6 +24,7 @@ namespace MStack.MainSite.Controllers
         /// 帖子列表部分页
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         public ActionResult TopicList()
         {
             var viewModel = new List<Topic>();

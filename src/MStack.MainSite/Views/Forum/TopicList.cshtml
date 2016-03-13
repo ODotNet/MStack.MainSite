@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<MStack.MainSite.Models.Topic>
+<div class="row">
+    <div class="col-sm-12">
+        <p class="pull-right">
+            <a href="/Forum/Publish" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>发帖</a>
+        </p>
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Publish")
-</p>
 <table class="table">
     <tr>
         <th>
