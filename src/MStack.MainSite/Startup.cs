@@ -31,6 +31,22 @@ namespace MStack.MainSite
                 SignInAsAuthenticationType = "QQ登录",
                 AuthenticationType = "QQ登录"
             });
+
+            //app.UseWeChatAuthentication(new Microsoft.Owin.Security.WeChat.WeChatAuthenticationOptions()
+            //{
+            //    AppId = "101294257",
+            //    AppSecret = "10ef6f7c0f935d892c058f240474645d",
+            //    Caption = "微信登录",
+            //    SignInAsAuthenticationType = "微信登录"
+            //});
+
+            app.UseMicrosoftAccountAuthentication(new Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions
+            {
+                ClientId = "000000004018CC02",
+                ClientSecret = "r-qtEQMR8-PIAWc9Zlfp2unOggVUiCuH",
+                Caption = "Windows帐号登录",
+                SignInAsAuthenticationType = "Windows帐号登录"
+            });
         }
     }
 }
