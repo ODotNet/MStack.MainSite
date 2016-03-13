@@ -16,7 +16,7 @@ namespace MStack.Core.Repositories
 {
     public class MStackRepository<TKey>
     {
-        protected ISession Session { get; private set; }
+        public ISession Session { get; private set; }
 
         public MStackRepository(ISession session)
         {

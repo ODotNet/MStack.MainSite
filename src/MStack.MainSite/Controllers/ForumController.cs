@@ -1,4 +1,5 @@
-﻿using MStack.MainSite.Models;
+﻿using MStack.Core.Repositories;
+using MStack.Infrastructure.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,17 @@ namespace MStack.MainSite.Controllers
     [Authorize]
     public class ForumController : BaseController
     {
+        public MStackRepository<Guid> DataContext { get; set; }
+
+        public ForumController()
+        {
+            this.DataContext = new MStackRepository<Guid>(NHSessionFactory.OpenSession());
+        }
         /// <summary>
         /// 论坛模块首页
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View();
@@ -23,9 +31,10 @@ namespace MStack.MainSite.Controllers
         /// 帖子列表部分页
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         public ActionResult TopicList()
         {
-            var viewModel = new List<Topic>();
+            var viewModel = DataContext.GetQuery<Topic>().ToList<Topic>();
             return PartialView(viewModel);
         }
 
@@ -40,19 +49,36 @@ namespace MStack.MainSite.Controllers
         }
 
         [HttpPost, ActionName("Publish")]
-        public ActionResult PublishPost()
+        public ActionResult PublishPost(FormCollection collection)
         {
-            return View();
+            var model = new Topic();
+            try
+            {
+                using (var tran = DataContext.Session.BeginTransaction())
+                {
+                    this.TryUpdateModel<Topic>(model);
+                    model.PublishDateTime = DateTime.Now;
+                    model.Author = DataContext.GetQuery<User>().SingleOrDefault(x => x.UserName == User.Identity.Name);
+                    DataContext.Insert<Topic>(model);
+                    tran.Commit();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                return View(model);
+            }
         }
 
         /// <summary>
         /// 编辑Topic页面
         /// </summary>
-        /// <param name="topicId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult EditTopic(Guid topicId)
+        public ActionResult EditTopic(Guid id)
         {
-            return View();
+            var model = DataContext.Get<Topic>(x => x.Id == id);
+            return View(model);
         }
 
         /// <summary>
@@ -60,13 +86,20 @@ namespace MStack.MainSite.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        [HttpPost, ActionName("EditTopic")]
         public ActionResult EditTopicPost(Topic model)
         {
-            return View();
+            using (var tran = DataContext.Session.BeginTransaction())
+            {
+                model.Author = DataContext.GetQuery<User>().SingleOrDefault(x => x.UserName == User.Identity.Name);
+                DataContext.SaveOrUpdate<Topic>(model);
+                tran.Commit();
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]
-        public ActionResult Comment(Comment comment)
+        public ActionResult Comment(Models.Comment comment)
         {
             return View();
         }
