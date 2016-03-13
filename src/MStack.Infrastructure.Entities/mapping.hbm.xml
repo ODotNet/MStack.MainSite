@@ -33,5 +33,15 @@
     <property name="ClaimType" length="128"/>
     <property name="ClaimValue" length="128" />
   </class>
+  <class name="Topic" table="`Topic`">
+    <cache usage="read-write" />
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <property name="Title" length="128"/>
+    <property name="Content" length="2000"/>
+    <property name="PublishDateTime"/>
+    <many-to-one name="Author" class="User" column="Author" not-found="ignore"/>
+  </class>
 </hibernate-mapping>
 

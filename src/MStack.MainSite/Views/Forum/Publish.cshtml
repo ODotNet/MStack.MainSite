@@ -1,4 +1,4 @@
-﻿@model MStack.MainSite.Models.Topic
+﻿@model MStack.Infrastructure.Entities.Topic
 
 @{
     ViewBag.Title = "发表帖子";
@@ -27,7 +27,6 @@
                 @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="发表帖子" class="btn btn-primary" />
