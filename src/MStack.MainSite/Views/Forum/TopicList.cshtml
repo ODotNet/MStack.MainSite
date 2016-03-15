@@ -40,7 +40,7 @@
                 @Html.DisplayFor(modelItem => item.Author.UserName)
             </td>
             <td>
-                @{ if (item.Author.UserName == User.Identity.Name)
+                @{ if (item.Author != Null && User != Null && User.Identity != Null && item.Author.UserName == User.Identity.Name)
                 {
                         <a href="/Forum/EditTopic?id=@item.Id" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span>编辑</a>
                         @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |
