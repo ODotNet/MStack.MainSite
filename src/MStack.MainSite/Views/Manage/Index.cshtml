@@ -1,17 +1,15 @@
-﻿@model MStack.MainSite.Models.UserModel
+﻿@model MStack.Infrastructure.Entities.User
 
 @{
-    ViewBag.Title = "个人信息";
+    ViewBag.Title = "Index";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2>Index</h2>
 
 <div>
+    <h4>User</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dd>
-            <img src="@Model.Avatar" class="img-thumbnail" />
-        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.UserName)
         </dt>
@@ -35,20 +33,42 @@
         <dd>
             @Html.DisplayFor(model => model.DisplayName)
         </dd>
+
         <dt>
-            @Html.DisplayNameFor(model => model.Company)
+            @Html.DisplayNameFor(model => model.PasswordHash)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Company)
+            @Html.DisplayFor(model => model.PasswordHash)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SecurityStamp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SecurityStamp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LoginFailTimes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoginFailTimes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailConfirmed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailConfirmed)
         </dd>
 
     </dl>
 </div>
-<div class="row">
-    <div class="pull-right">
-        @Html.ActionLink("编辑信息", "EditUser", new { id = Model.Id },new { data_pjax = 1 }) |
-        @Html.ActionLink("修改密码", "Index",null,new { data_pjax = 1 })
-    </div>
-</div>
-
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -13,8 +13,6 @@
     <property name="SecurityStamp" length="64"/>
     <property name="LoginFailTimes"/>
     <property name="EmailConfirmed"/>
-    <property name="Avatar"/>
-    <property name="Company"/>
   </class>
 
   <class name="UserLogin">

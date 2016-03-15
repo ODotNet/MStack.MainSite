@@ -15,8 +15,7 @@ namespace MStack.Infrastructure.Entities
         public string SecurityStamp { get; set; }
         public int LoginFailTimes { get; set; }
         public bool EmailConfirmed { get; set; }
-        public string Avatar { set; get; }
-        public string Company { set; get; }
+
     }
 
     /// <summary>
