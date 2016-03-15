@@ -42,6 +42,9 @@
     <property name="Content" length="2000"/>
     <property name="PublishDateTime"/>
     <many-to-one name="Author" class="User" column="Author" not-found="ignore"/>
+    <property name="Category"/>
+    <property name="Replies"/>
+    <property name="Views"/>
   </class>
 </hibernate-mapping>
 

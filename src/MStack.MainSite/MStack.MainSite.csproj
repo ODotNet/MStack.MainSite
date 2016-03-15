@@ -233,12 +233,52 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="App_Readme\NProgressjs_README.md" />
     <Content Include="App_Readme\NProgressjs_LICENSE" />
+    <Content Include="Plugins\datatables\images\Sorting icons.psd" />
     <None Include="Properties\PublishProfiles\PRD.pubxml" />
     <None Include="Properties\PublishProfiles\DEV.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Plugins\datatables\css\dataTables.bootstrap.css" />
+    <Content Include="Plugins\datatables\css\dataTables.bootstrap.min.css" />
+    <Content Include="Plugins\datatables\css\dataTables.bootstrap4.css" />
+    <Content Include="Plugins\datatables\css\dataTables.bootstrap4.min.css" />
+    <Content Include="Plugins\datatables\css\dataTables.foundation.css" />
+    <Content Include="Plugins\datatables\css\dataTables.foundation.min.css" />
+    <Content Include="Plugins\datatables\css\dataTables.jqueryui.css" />
+    <Content Include="Plugins\datatables\css\dataTables.jqueryui.min.css" />
+    <Content Include="Plugins\datatables\css\dataTables.material.css" />
+    <Content Include="Plugins\datatables\css\dataTables.material.min.css" />
+    <Content Include="Plugins\datatables\css\dataTables.semanticui.css" />
+    <Content Include="Plugins\datatables\css\dataTables.semanticui.min.css" />
+    <Content Include="Plugins\datatables\css\dataTables.uikit.css" />
+    <Content Include="Plugins\datatables\css\dataTables.uikit.min.css" />
+    <Content Include="Plugins\datatables\css\jquery.dataTables.css" />
+    <Content Include="Plugins\datatables\css\jquery.dataTables.min.css" />
+    <Content Include="Plugins\datatables\css\jquery.dataTables_themeroller.css" />
+    <Content Include="Plugins\datatables\images\favicon.ico" />
+    <Content Include="Plugins\datatables\images\sort_asc.png" />
+    <Content Include="Plugins\datatables\images\sort_asc_disabled.png" />
+    <Content Include="Plugins\datatables\images\sort_both.png" />
+    <Content Include="Plugins\datatables\images\sort_desc.png" />
+    <Content Include="Plugins\datatables\images\sort_desc_disabled.png" />
+    <Content Include="Plugins\datatables\js\dataTables.bootstrap.js" />
+    <Content Include="Plugins\datatables\js\dataTables.bootstrap.min.js" />
+    <Content Include="Plugins\datatables\js\dataTables.bootstrap4.js" />
+    <Content Include="Plugins\datatables\js\dataTables.bootstrap4.min.js" />
+    <Content Include="Plugins\datatables\js\dataTables.foundation.js" />
+    <Content Include="Plugins\datatables\js\dataTables.foundation.min.js" />
+    <Content Include="Plugins\datatables\js\dataTables.jqueryui.js" />
+    <Content Include="Plugins\datatables\js\dataTables.jqueryui.min.js" />
+    <Content Include="Plugins\datatables\js\dataTables.material.js" />
+    <Content Include="Plugins\datatables\js\dataTables.material.min.js" />
+    <Content Include="Plugins\datatables\js\dataTables.semanticui.js" />
+    <Content Include="Plugins\datatables\js\dataTables.semanticui.min.js" />
+    <Content Include="Plugins\datatables\js\dataTables.uikit.js" />
+    <Content Include="Plugins\datatables\js\dataTables.uikit.min.js" />
+    <Content Include="Plugins\datatables\js\jquery.dataTables.js" />
+    <Content Include="Plugins\datatables\js\jquery.dataTables.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
@@ -256,6 +296,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\site.js" />
+    <Content Include="Scripts\TopicList.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -295,6 +336,7 @@
     <Content Include="Views\User\UserLoginList.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Forum\Index.cshtml" />
+    <Content Include="Views\Forum\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

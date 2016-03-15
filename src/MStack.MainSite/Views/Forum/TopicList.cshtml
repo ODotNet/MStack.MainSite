@@ -1,54 +1,81 @@
 ﻿@model IEnumerable<MStack.Infrastructure.Entities.Topic>
-<div class="row">
-    <div class="col-sm-12">
-        <p class="pull-right">
-            <a href="/Forum/Publish" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>发帖</a>
-        </p>
-    </div>
-</div>
+<div class="well margin-top-10">
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Content)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PublishDateTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Author)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublishDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author.UserName)
-            </td>
-            <td>
-                @{ if (item.Author != null && item.Author.UserName.Equals(User.Identity.Name))
-                 {
-                    <a href="/Forum/EditTopic?id=@item.Id" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span>编辑</a>
-                    @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
-                 }
+    <div class="row margin-bottom-10">
+        <div class="col-sm-12">
+                <div class="dropdown pull-left">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        所有分类
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#"><span class="label label-primary badge-category">=></span>DoNet</a></li>
+                        <li><a href="#"><span class="label label-success badge-category">=></span>UI</a></li>
+                        <li><a href="#"><span class="label label-default badge-category">=></span>Other</a></li>
+                    </ul>
+                </div>
+                @if (User.Identity.IsAuthenticated)
+            {
+                    <a href="/Forum/Publish" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-plus margin-right-5"></span>发帖</a>
                 }
-            </td>
-        </tr>
-    }
+        </div>
+    </div>
 
-</table>
+    <table class="table table-striped table-hover table-data">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Author)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Replies)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Views)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PublishDateTime)
+                </th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.Title,"Detail",new { id=item.Id })
+                    </td>
+                    <td>
+                        @item.Category.ToString()
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => (item.Author ?? new MStack.Infrastructure.Entities.User()).UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Replies)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Views)
+                    </td>
+                    <td>
+                        @item.PublishDateTime.ToString("yyyy年MM月dd日 HH:mm:ss")
+                    </td>
+                    <td>
+                        @if (item.Author != null && item.Author.UserName.Equals(User.Identity.Name))
+                        {
+                            <a href="/Forum/EditTopic?id=@item.Id" class="btn btn-primary"><span class="glyphicon glyphicon-edit margin-right-5"></span>编辑</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

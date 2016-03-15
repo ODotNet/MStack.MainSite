@@ -1,7 +1,14 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-
+@section styles{
+    <link href="~/Plugins/datatables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+}
 
 @Html.Action("TopicList")
 
+@section footScripts{
+    <script src="~/Plugins/datatables/js/jquery.dataTables.js"></script>
+    <script src="~/Plugins/datatables/js/dataTables.bootstrap.js"></script>
+    <script src="~/Scripts/TopicList.js"></script>
+}
