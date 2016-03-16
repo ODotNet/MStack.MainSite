@@ -1,0 +1,25 @@
+﻿@model IEnumerable<MStack.Infrastructure.Entities.User>
+
+@{
+    ViewBag.Title = "MStack作者";
+}
+
+<h2>作者信息</h2>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="..." alt="...">
+                <div class="caption">
+                    <h3>@item.DisplayName</h3>
+                    <p>
+                        @item.Email
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
