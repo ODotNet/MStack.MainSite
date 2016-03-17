@@ -47,6 +47,10 @@
       <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EmitMapper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EmitMapper.1.0.0\lib\EmitMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
       <Private>True</Private>
@@ -205,18 +209,25 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\ForumModels.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="WebFramework\Authentication\ApplicationUserManager.cs" />
     <Compile Include="WebFramework\Authentication\ApplicationUserRepository.cs" />
     <Compile Include="WebFramework\Authentication\OwinAuthenticationExtensions.cs" />
     <Compile Include="WebFramework\Data\DbConnectionProvider.cs" />
+    <Compile Include="WebFramework\Extensions\MapperExtensions.cs" />
+    <Compile Include="WebFramework\Untils\FileUntils.cs" />
+    <Compile Include="WebFramework\Untils\ImageUntils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\jcrop\Jcrop.gif" />
+    <Content Include="Content\jcrop\jquery.Jcrop.css" />
+    <Content Include="Content\jcrop\jquery.Jcrop.min.css" />
     <Content Include="Content\nprogress.css" />
     <Content Include="Content\miniprofiler.css" />
     <Content Include="favicon.ico" />
@@ -239,6 +250,7 @@
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Plugins\datatables\css\dataTables.bootstrap.css" />
     <Content Include="Plugins\datatables\css\dataTables.bootstrap.min.css" />
@@ -281,6 +293,9 @@
     <Content Include="Plugins\datatables\js\jquery.dataTables.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jcrop\jquery.color.js" />
+    <Content Include="Scripts\jcrop\jquery.Jcrop.js" />
+    <Content Include="Scripts\jcrop\jquery.Jcrop.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
@@ -337,9 +352,11 @@
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Forum\Index.cshtml" />
     <Content Include="Views\Forum\Detail.cshtml" />
+    <Content Include="Views\Manage\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Image\" />
     <Folder Include="WebFramework\Mvc\Filters\" />
   </ItemGroup>
   <ItemGroup>
@@ -373,7 +390,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>11145</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
