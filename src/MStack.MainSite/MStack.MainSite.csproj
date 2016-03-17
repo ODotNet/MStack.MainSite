@@ -291,8 +291,10 @@
     <Content Include="Plugins\datatables\js\dataTables.uikit.min.js" />
     <Content Include="Plugins\datatables\js\jquery.dataTables.js" />
     <Content Include="Plugins\datatables\js\jquery.dataTables.min.js" />
+    <Content Include="Scripts\ajaxfileupload.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\editUser.js" />
     <Content Include="Scripts\jcrop\jquery.color.js" />
     <Content Include="Scripts\jcrop\jquery.Jcrop.js" />
     <Content Include="Scripts\jcrop\jquery.Jcrop.min.js" />

@@ -71,20 +71,18 @@ namespace MStack.MainSite.Controllers
             {
                 var imgFile = files[0];
                 var ext = Path.GetExtension(imgFile.FileName);
-                var dirName = "/webupload/avatar/";
-                var savePath = dirName + string.Format("avatar_tmp_{0}{1}", id, ext);
-                var physicPath = Server.MapPath(savePath);
-                FileUntils.CreateDirIfNotExists(Server.MapPath(dirName));
-                imgFile.SaveAs(physicPath);
-                return Json(new { success = true, savePath = savePath });
+                var fileName = string.Format("avatar_tmp_{0}{1}{2}", id,DateTime.Now.ToString("yyyyMMddHHmm"), ext);
+                var ret = FileUntils.SaveFile(imgFile.InputStream, "Avatar", fileName);
+                return Json(new { success = true, savePath = ret });
             }
             return Json(new { success = false, savePath = string.Empty });
         }
         private string CropAvatar(string sourcePath, int x, int y, int w, int h)
         {
             var savePath = sourcePath.Replace("tmp_", "");
-            ImageUntils.CropImage(Server.MapPath(sourcePath), Server.MapPath(savePath), new Rectangle(x, y, w, h));
-            FileUntils.Delete(Server.MapPath(sourcePath));
+            var tmpPath = FileUntils.GetAbsolutePath(sourcePath);
+            ImageUntils.CropImage(tmpPath, FileUntils.GetAbsolutePath(savePath), new Rectangle(x, y, w, h));
+            FileUntils.Delete(tmpPath);
             return savePath;
         }
         protected ClaimsIdentity UserIdentity
