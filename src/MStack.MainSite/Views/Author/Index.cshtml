@@ -9,12 +9,12 @@
 <div class="row">
     @foreach (var item in Model)
     {
-        <div class="col-sm-6 col-md-4">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
             <div class="thumbnail">
-                <img src="@item.Avatar" alt="...">
+                <img src="@Url.Content(string.IsNullOrWhiteSpace(item.Avatar) ? "~/Images/logo/100x100.png" : item.Avatar)" width="100" height="100" />
                 <div class="caption">
-                    <h3>@item.DisplayName</h3>
-                    <p>
+                    <h3 style="text-overflow:ellipsis;overflow: hidden;white-space: nowrap;" title="@item.DisplayName">@item.DisplayName</h3>
+                    <p style="text-overflow:ellipsis">
                         @item.Email
                     </p>
 

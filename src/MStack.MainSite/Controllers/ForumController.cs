@@ -38,6 +38,13 @@ namespace MStack.MainSite.Controllers
             return PartialView(viewModel);
         }
 
+        [AllowAnonymous]
+        public ActionResult HomeTop20TopicList()
+        {
+            var viewModel = DataContext.GetQuery<Topic>().ToList<Topic>();
+            return PartialView(viewModel);
+        }
+
         /// <summary>
         /// 发帖页面
         /// </summary>

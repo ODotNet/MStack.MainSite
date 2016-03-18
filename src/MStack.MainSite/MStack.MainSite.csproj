@@ -199,8 +199,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Controllers\AuthorController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
+    <Compile Include="Controllers\DownloadController.cs" />
+    <Compile Include="Controllers\EbookController.cs" />
     <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -245,6 +249,13 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="App_Readme\NProgressjs_README.md" />
     <Content Include="App_Readme\NProgressjs_LICENSE" />
+    <Content Include="Images\logo\100x100.png" />
+    <Content Include="Images\logo\16x16.png" />
+    <Content Include="Images\logo\32x32.png" />
+    <Content Include="Images\logo\48x48.png" />
+    <Content Include="Images\logo\50x50.png" />
+    <Content Include="Images\logo\64x64.png" />
+    <Content Include="Images\logo\logo.png" />
     <Content Include="Plugins\datatables\images\Sorting icons.psd" />
     <None Include="Properties\PublishProfiles\PRD.pubxml" />
     <None Include="Properties\PublishProfiles\DEV.pubxml" />
@@ -355,6 +366,12 @@
     <Content Include="Views\Author\Index.cshtml" />
     <Content Include="Views\Forum\Detail.cshtml" />
     <Content Include="Views\Manage\EditUser.cshtml" />
+    <Content Include="Views\Blog\Index.cshtml" />
+    <Content Include="Views\Download\Index.cshtml" />
+    <Content Include="Views\Forum\HomeTop20TopicList.cshtml" />
+    <Content Include="Views\Author\HomeTop20Author.cshtml" />
+    <Content Include="Views\Answer\Index.cshtml" />
+    <Content Include="Views\Ebook\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

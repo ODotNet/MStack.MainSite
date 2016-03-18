@@ -22,5 +22,11 @@ namespace MStack.MainSite.Controllers
             var user = DataContext.GetQuery<User>().ToList();
             return View(user);
         }
+
+        public ActionResult HomeTop20Author()
+        {
+            var user = DataContext.GetQuery<User>().ToList();
+            return PartialView(user);
+        }
     }
 }
