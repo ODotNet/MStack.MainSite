@@ -1,0 +1,156 @@
+﻿@model MStack.MainSite.Models.UserModel
+
+@{
+    ViewBag.Title = "编辑信息";
+}
+@section headScripts{
+    <link href="~/Content/jcrop/jquery.Jcrop.min.css" rel="stylesheet" />
+}
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.AvatarState)
+        @Html.HiddenFor(model => model.Avatar)
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div style="width:200px;height:200px;overflow:hidden" id="imgContainer">
+                    <img  class="img-rounded"  src="@Model.Avatar" id="imgPreview">
+                </div>
+                <input type="file" id="fileUpload" name="file" class="btn btn-default" style="width:100px"  />
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control",@readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DisplayName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DisplayName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DisplayName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Company, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Company, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Company, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="保存" class="btn btn-primary" data-pjax="1" />
+            </div>
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="pull-right">
+        @Html.ActionLink("返回", "Index",null,new { @class = "btn btn-default" ,data_pjax=1 })
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">修改头像</h4>
+            </div>
+            <div class="modal-body">
+                <img id="imgBox" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Scripts/ajaxfileupload.js"></script>
+    <script src="~/Scripts/jcrop/jquery.Jcrop.min.js"></script>
+    <script>
+        $(function () {
+            var guid = '@Model.Id.ToString("N")';
+            var $pimg = $("#imgPreview");
+            var $simg = $("#imgBox");
+            var $pcnt = $("#imgContainer");
+            var xsize = $pcnt.width();
+            var ysize = $pcnt.height();
+            var $msgBox = $('#myModal');
+            var $state = $("#AvatarState");
+            var $avatar = $("#Avatar");
+            var jcropApi, boundx, boundy;
+            $("#fileUpload").change(function () {
+                $.ajaxFileUpload({
+                    url: '/Manage/UploadAvatar/' + guid,
+                    type: 'post',
+                    secureuri: false, //一般设置为false
+                    fileElementId: 'fileUpload', // 上传文件的id、name属性名
+                    dataType: 'json', //返回值类型，一般设置为json、application/json
+                    success: function (data, status) {
+                        if (data.success) {
+                            var path = data.savePath;
+                            $avatar.val(path);
+                            $simg.attr("src", path);
+                            $pimg.attr("src", path);
+                            $msgBox.modal();
+                            $simg.Jcrop({
+                                onChange: function (c) {
+                                    if (parseInt(c.w) > 0) {
+                                        $state.val([c.x, c.y, c.w, c.h].join(','));
+                                        var rx = xsize / c.w;
+                                        var ry = ysize / c.h;
+                                        $pimg.css({
+                                            width: Math.round(rx * boundx) + 'px',
+                                            height: Math.round(ry * boundy) + 'px',
+                                            marginLeft: '-' + Math.round(rx * c.x) + 'px',
+                                            marginTop: '-' + Math.round(ry * c.y) + 'px'
+                                        });
+                                    }
+                                },
+                                onRelease: function () {
+
+                                },
+                                aspectRatio: 1
+                            }, function () {
+                                var bounds = this.getBounds();
+                                boundx = bounds[0];
+                                boundy = bounds[1];
+                                jcropApi = this;
+                                jcropApi.animateTo([50, 50, 200, 200])
+                            });
+                            $pcnt.dblclick(function () {
+                                $msgBox.modal();
+                            });
+                        }
+                    },
+                    error: function (data, status, e) {
+                        console.error(e);
+                    }
+                });
+            });
+        
+        });
+    </script>
+}

@@ -1,0 +1,18 @@
+﻿@model MStack.Infrastructure.Entities.Topic
+
+@{
+    ViewBag.Title = Model.Title;
+}
+<div class="page-header">
+    <h1>@Model.Title <small>@Model.Category.ToString()</small></h1>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <p>@Model.Content</p>
+    </div>
+</div>
+<div class="row">
+    <div class="pull-right">
+        @Html.ActionLink("返回列表", "Index", "", new { @class = "btn btn-default" })
+    </div>
+</div>
