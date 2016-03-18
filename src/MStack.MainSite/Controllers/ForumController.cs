@@ -38,6 +38,13 @@ namespace MStack.MainSite.Controllers
             return PartialView(viewModel);
         }
 
+        [AllowAnonymous]
+        public ActionResult HomeTop20TopicList()
+        {
+            var viewModel = DataContext.GetQuery<Topic>().ToList<Topic>();
+            return PartialView(viewModel);
+        }
+
         /// <summary>
         /// 发帖页面
         /// </summary>
@@ -78,6 +85,7 @@ namespace MStack.MainSite.Controllers
         public ActionResult EditTopic(Guid id)
         {
             var model = DataContext.Get<Topic>(x => x.Id == id);
+            ViewBag.Category = model.Category;
             return View(model);
         }
 
@@ -96,6 +104,12 @@ namespace MStack.MainSite.Controllers
                 tran.Commit();
                 return RedirectToAction("Index");
             }
+        }
+
+        public ActionResult Detail(Guid id)
+        {
+            var model = DataContext.Get<Topic>(x => x.Id == id);
+            return View(model);
         }
 
         [HttpPost]

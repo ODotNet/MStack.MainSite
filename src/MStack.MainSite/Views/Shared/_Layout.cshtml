@@ -17,6 +17,7 @@
     <meta property="qc:admins" content="1776214747653413363452" /><!--QQ Auth认证-->
     @Styles.Render("~/Content/fx")
     @*@Scripts.Render("~/bundles/modernizr")*@
+    @RenderSection("styles", false)
     @RenderSection("headScripts", false)
 </head>
 <body>
@@ -32,9 +33,13 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("问答", "Index", "Answer", null, new { data_pjax = 1 })</li>
+                    <li>@Html.ActionLink("博客", "Index", "Blog", null, new { data_pjax = 1 })</li>
                     <li>@Html.ActionLink("论坛", "Index", "Forum", null, new { data_pjax = 1 })</li>
-                    <li>@Html.ActionLink("推荐书籍", "BookList", "Home", null, new { data_pjax = 1 })</li>
-
+                    <li>@Html.ActionLink("电子书", "Index", "Ebook", null, new { data_pjax = 1 })</li>
+                    <li>@Html.ActionLink("下载", "Index", "Download", null, new { data_pjax = 1 })</li>
+                    <li>@Html.ActionLink("用户", "Index", "Author", null, new { data_pjax = 1 })</li>
+                    
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

@@ -22,3 +22,28 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+/*
+    Topic
+*/
+.margin-top-10{
+    margin-top:10px;
+}
+
+.margin-right-5{
+    margin-right:5px;
+}
+
+.margin-bottom-10{
+    margin-bottom:10px;
+}
+
+.margin-left-5{
+    margin-left:5px;
+}
+.badge-category{
+    height: 15px;
+    display: inline-block;
+    margin-right: 5px;
+}
