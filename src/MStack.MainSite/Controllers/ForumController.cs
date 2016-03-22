@@ -105,6 +105,22 @@ namespace MStack.MainSite.Controllers
             return View(model);
         }
 
+        [HttpGet, ActionName("AddView")]
+        public void AddViewGet(Guid id)
+        {
+            try
+            {
+                using (var tran = DataContext.Session.BeginTransaction())
+                {
+                    var model = DataContext.Get<Topic>(x => x.Id == id);
+                    model.Views += 1;
+                    DataContext.SaveOrUpdate<Topic>(model);
+                    tran.Commit();
+                }
+            }
+            catch { }
+        }
+
         [HttpPost]
         public ActionResult Comment(Models.Comment comment)
         {

@@ -27,23 +27,40 @@ textarea {
 /*
     Topic
 */
-.margin-top-10{
-    margin-top:10px;
+.margin-top-10 {
+    margin-top: 10px;
 }
 
-.margin-right-5{
-    margin-right:5px;
+.margin-right-5 {
+    margin-right: 5px;
 }
 
-.margin-bottom-10{
-    margin-bottom:10px;
+.margin-bottom-10 {
+    margin-bottom: 10px;
 }
 
-.margin-left-5{
-    margin-left:5px;
+.margin-left-5 {
+    margin-left: 5px;
 }
-.badge-category{
+
+.badge-category {
     height: 15px;
     display: inline-block;
     margin-right: 5px;
+}
+
+.badge-category-DoNet {
+    background-color: #337ab7;
+}
+
+.badge-category-UI {
+    background-color: #5cb85c;
+}
+
+.badge-category-Other {
+    background-color: #777;
+}
+
+.panel input, .panel select, .panel textarea {
+    max-width: 100%;
 }

@@ -1,18 +1,54 @@
-﻿@model MStack.Infrastructure.Entities.Topic
+﻿@using MStack.Infrastructure.Entities
+@model MStack.Infrastructure.Entities.Topic
 
 @{
     ViewBag.Title = Model.Title;
 }
 <div class="page-header">
-    <h1>@Model.Title <small>@Model.Category.ToString()</small></h1>
+    <h1>@Model.Title <small><span class="label badge-category-@Model.Category.ToString()">@Model.Category.ToString()</span></small></h1>
+    <h6 class="text-left"><a class="margin-right-5" href="">@((Model.Author ?? new User()).UserName)</a><small>@Model.PublishDateTime.ToString("yyyy年MM月dd日 HH:mm:ss")</small></h6>
 </div>
 <div class="row">
-    <div class="col-sm-12">
-        <p>@Model.Content</p>
+    <div class="col-sm-8">
+        <div class="well">
+            <p>@Model.Content</p>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="pull-right">
-        @Html.ActionLink("返回列表", "Index", "", new { @class = "btn btn-default" })
+    <div class="col-sm-4">
+
     </div>
+    <div class="col-sm-8">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a class="" href=""><strong>@User.Identity.Name</strong></a> 
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <textarea class="form-control" rows="5"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12 text-right">
+                                <a class="btn btn-primary">回复</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="jumbotron">
+                <h1>请在<a href="/Account/Login">登录</a>后回复~~</h1>
+            </div>
+        }
+    </div>
+    @Html.HiddenFor(o => o.Id)
 </div>
+@section footScripts{
+    <script src="~/Scripts/TopicList/Detail.js"></script>
+}

@@ -3,21 +3,21 @@
 
     <div class="row margin-bottom-10">
         <div class="col-sm-12">
-                <div class="dropdown pull-left">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        所有分类
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#"><span class="label label-primary badge-category">=></span>DoNet</a></li>
-                        <li><a href="#"><span class="label label-success badge-category">=></span>UI</a></li>
-                        <li><a href="#"><span class="label label-default badge-category">=></span>Other</a></li>
-                    </ul>
-                </div>
-                @if (User.Identity.IsAuthenticated)
+            <div class="dropdown pull-left">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    所有分类
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li><a href="#"><span class="label label-primary badge-category">=></span>DoNet</a></li>
+                    <li><a href="#"><span class="label label-success badge-category">=></span>UI</a></li>
+                    <li><a href="#"><span class="label label-default badge-category">=></span>Other</a></li>
+                </ul>
+            </div>
+            @if (User.Identity.IsAuthenticated)
             {
-                    <a href="/Forum/Publish" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-plus margin-right-5"></span>发帖</a>
-                }
+                <a href="/Forum/Publish" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-plus margin-right-5"></span>发帖</a>
+            }
         </div>
     </div>
 
@@ -50,7 +50,7 @@
             {
                 <tr>
                     <td>
-                        @Html.ActionLink(item.Title,"Detail",new { id=item.Id })
+                        @Html.ActionLink(item.Title, "Detail", new { id = item.Id })
                     </td>
                     <td>
                         @item.Category.ToString()
