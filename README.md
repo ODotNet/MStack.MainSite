@@ -1,3 +1,4 @@
+此项目已暂停，相关问题请到 [DNL Issues提问](https://github.com/dotnetlive/dotnetlive/issues/new)
 ## MStack.MainSite(微软技术栈俱乐部网站) ##
 
 有什么资料我可以看?
